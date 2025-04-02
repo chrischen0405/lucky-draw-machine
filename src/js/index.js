@@ -10,6 +10,11 @@ var awardList = [];//扭蛋机中的小球集合
 var timer;//计时器
 var award = document.getElementById('awardBall');
 var message = document.getElementById('message');
+const startBtn = document.getElementById('start');
+
+startBtn.addEventListener('click', () => {
+  play()
+})
 
 function init() {//初始化
   for (let i = 0; i < ballNum; i++) {//随机生成各色小球
