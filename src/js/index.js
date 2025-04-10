@@ -1,3 +1,5 @@
+import Ball from './Ball.js';
+
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 const ball1 = document.getElementById('ball1');//图片对象
@@ -19,7 +21,7 @@ startBtn.addEventListener('click', () => {
 function init() {//初始化
   for (let i = 0; i < BALL_NUM; i++) {//随机生成各色小球
     let index = Math.floor(4 * Math.random());
-    awardList[i] = new Ball(index, ballList[index]);//新建小球对象
+    awardList[i] = new Ball(index, ballList[index], canvas, ctx);//新建小球对象
   }
   window.clearInterval(timer);//清除计时器
   timer = setInterval(function () {
@@ -28,43 +30,6 @@ function init() {//初始化
       awardList[i].run();
     }//使小球运动
   }, 15);
-}
-
-function Ball(index, img) {
-  this.r = 30;//小球半径
-  this.x = this.rand(canvas.width - this.r * 2);//小球初始横坐标
-  this.y = this.rand(canvas.height - this.r * 2);//小球初始纵坐标
-  this.color = index;//小球颜色，以下标表示
-  this.img = img;//小球素材
-  do {
-    this.speedX = this.rand(20) - 10;
-  } while (this.speedX < 5);//小球横坐标改变速度
-  do {
-    this.speedY = this.rand(20) - 10;
-  } while (this.speedY < 5);//小球纵坐标改变速度
-}
-
-Ball.prototype = {
-  rand: function (num) {//随机数
-    return Math.random() * num;
-  },
-  run: function () {//小球运动函数
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x > canvas.width - this.r * 2) {//小球碰到右边界，横坐标速度变为负
-      this.speedX = -this.speedX;
-    }
-    if (this.x < 0) {//小球碰到左边界，横坐标速度变为正
-      this.speedX = Math.abs(this.speedX);
-    }
-    if (this.y > canvas.height - this.r * 2) {//小球碰到下边界，纵坐标速度变为负
-      this.speedY = -this.speedY;
-    }
-    if (this.y < 0) {//小球碰到上边界，纵坐标速度变为正
-      this.speedY = Math.abs(this.speedY);
-    }
-    ctx.drawImage(this.img, this.x, this.y, 60, 60);//绘制小球
-  }
 }
 
 function play() {
