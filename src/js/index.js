@@ -1,15 +1,15 @@
-var canvas = document.getElementById('myCanvas');
-var ctx = canvas.getContext('2d');
-var ball1 = document.getElementById('ball1');//图片对象
-var ball2 = document.getElementById('ball2');//图片对象
-var ball3 = document.getElementById('ball3');//图片对象
-var ball4 = document.getElementById('ball4');//图片对象
-var ballList = [ball1, ball2, ball3, ball4];//图片对象数组
-var ballNum = 4;//扭蛋机里面的小球数
-var awardList = [];//扭蛋机中的小球集合
-var timer;//计时器
-var award = document.getElementById('awardBall');
-var message = document.getElementById('message');
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+const ball1 = document.getElementById('ball1');//图片对象
+const ball2 = document.getElementById('ball2');//图片对象
+const ball3 = document.getElementById('ball3');//图片对象
+const ball4 = document.getElementById('ball4');//图片对象
+const ballList = [ball1, ball2, ball3, ball4];//图片对象数组
+const BALL_NUM = 4;//扭蛋机里面的小球数
+const awardList = [];//扭蛋机中的小球集合
+let timer;//计时器
+const award = document.getElementById('awardBall');
+const message = document.getElementById('message');
 const startBtn = document.getElementById('start');
 
 startBtn.addEventListener('click', () => {
@@ -17,7 +17,7 @@ startBtn.addEventListener('click', () => {
 })
 
 function init() {//初始化
-  for (let i = 0; i < ballNum; i++) {//随机生成各色小球
+  for (let i = 0; i < BALL_NUM; i++) {//随机生成各色小球
     let index = Math.floor(4 * Math.random());
     awardList[i] = new Ball(index, ballList[index]);//新建小球对象
   }
