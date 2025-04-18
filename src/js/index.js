@@ -17,6 +17,7 @@ let timer;//计时器
 const award = document.getElementById('awardBall');
 const message = document.getElementById('message');
 const startBtn = document.getElementById('start');
+let isLoading = true;
 
 startBtn.addEventListener('click', () => {
   play()
@@ -40,8 +41,7 @@ const initImg = async () => {
   ballList.push(ball1, ball2, ball3, ball4);
 }
 
-async function init() {//初始化
-  await initImg()
+const start = () => {
   for (let i = 0; i < BALL_NUM; i++) {//随机生成各色小球
     const index = Math.floor(4 * Math.random());
     awardList[i] = new Ball(index, ballList[index], canvas, ctx);//新建小球对象
@@ -55,10 +55,20 @@ async function init() {//初始化
   }, 15);
 }
 
+async function init() {//初始化
+  await initImg()
+  isLoading = false;
+  start()
+}
+
 function play() {
+  if (isLoading) {
+    alert('正在加载，请稍后！');
+    return;
+  }
   if (awardList.length === 0) {//奖池中没有小球
     alert('重新开始！');
-    init();
+    start();
     message.innerText = '点击抽奖';
   } else {
     window.clearInterval(timer);//清除计时器
