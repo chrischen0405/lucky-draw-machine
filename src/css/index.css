@@ -83,11 +83,6 @@ body {
   transform: translate(-50%);
 }
 
-.imgSrc {
-  display: none;
-  position: absolute;
-}
-
 .award {
   position: absolute;
   border: none;

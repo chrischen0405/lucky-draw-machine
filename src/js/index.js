@@ -1,12 +1,16 @@
 import Ball from './Ball.js';
+import ball1Url from '../img/1.png'
+import ball2Url from '../img/2.png'
+import ball3Url from '../img/3.png'
+import ball4Url from '../img/4.png'
 
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
-const ball1 = document.getElementById('ball1');//图片对象
-const ball2 = document.getElementById('ball2');//图片对象
-const ball3 = document.getElementById('ball3');//图片对象
-const ball4 = document.getElementById('ball4');//图片对象
-const ballList = [ball1, ball2, ball3, ball4];//图片对象数组
+let ball1 = null;//图片对象
+let ball2 = null;//图片对象
+let ball3 = null;//图片对象
+let ball4 = null;//图片对象
+const ballList = [];//图片对象数组
 const BALL_NUM = 4;//扭蛋机里面的小球数
 const awardList = [];//扭蛋机中的小球集合
 let timer;//计时器
@@ -18,9 +22,28 @@ startBtn.addEventListener('click', () => {
   play()
 })
 
-function init() {//初始化
+const loadImg = (imgUrl) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = imgUrl;
+    img.onload = () => {
+      resolve(img)
+    }
+  })
+}
+
+const initImg = async () => {
+  ball1 = await loadImg(ball1Url)
+  ball2 = await loadImg(ball2Url)
+  ball3 = await loadImg(ball3Url)
+  ball4 = await loadImg(ball4Url)
+  ballList.push(ball1, ball2, ball3, ball4);
+}
+
+async function init() {//初始化
+  await initImg()
   for (let i = 0; i < BALL_NUM; i++) {//随机生成各色小球
-    let index = Math.floor(4 * Math.random());
+    const index = Math.floor(4 * Math.random());
     awardList[i] = new Ball(index, ballList[index], canvas, ctx);//新建小球对象
   }
   window.clearInterval(timer);//清除计时器
