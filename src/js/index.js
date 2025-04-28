@@ -3,6 +3,7 @@ import ball1Url from '../img/1.png'
 import ball2Url from '../img/2.png'
 import ball3Url from '../img/3.png'
 import ball4Url from '../img/4.png'
+import { COLOR_DICT } from './constant.js';
 
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
@@ -79,36 +80,11 @@ function play() {
         awardList[i].run();
       }//使小球运动
     }, 15);
-    switch (r.color) {//小球掉落动画
-      case 0:
-        award.setAttribute('class', 'dropBall1');
-        break;
-      case 1:
-        award.setAttribute('class', 'dropBall2');
-        break;
-      case 2:
-        award.setAttribute('class', 'dropBall3');
-        break;
-      case 3:
-        award.setAttribute('class', 'dropBall4');
-        break;
-    }
+    //小球掉落动画
+    award.setAttribute('class', COLOR_DICT[r.color].class)
     setTimeout(function () {//扭蛋成功提示
       award.setAttribute('class', '');
-      switch (r.color) {
-        case 0:
-          message.innerText = '紫球！';
-          break;
-        case 1:
-          message.innerText = '绿球！';
-          break;
-        case 2:
-          message.innerText = '黄球！';
-          break;
-        case 3:
-          message.innerText = '红球！';
-          break;
-      }
+      message.innerText = COLOR_DICT[r.color].text;
     }, 1100);
   }
 }
