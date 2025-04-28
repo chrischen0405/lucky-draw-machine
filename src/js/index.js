@@ -7,10 +7,6 @@ import { COLOR_DICT } from './constant.js';
 
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
-let ball1 = null;//图片对象
-let ball2 = null;//图片对象
-let ball3 = null;//图片对象
-let ball4 = null;//图片对象
 const ballList = [];//图片对象数组
 const BALL_NUM = 4;//扭蛋机里面的小球数
 const awardList = [];//扭蛋机中的小球集合
@@ -24,22 +20,19 @@ startBtn.addEventListener('click', () => {
   play()
 })
 
-const loadImg = (imgUrl) => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.src = imgUrl;
-    img.onload = () => {
-      resolve(img)
-    }
-  })
+const loadImages = (urls) => {
+  return Promise.all(urls.map(url => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => resolve(img);
+    })
+  }))
 }
 
 const initImg = async () => {
-  ball1 = await loadImg(ball1Url)
-  ball2 = await loadImg(ball2Url)
-  ball3 = await loadImg(ball3Url)
-  ball4 = await loadImg(ball4Url)
-  ballList.push(ball1, ball2, ball3, ball4);
+  const ballUrls = [ball1Url, ball2Url, ball3Url, ball4Url]; //图片对象集合
+  ballList.push(...await loadImages(ballUrls));
 }
 
 const start = () => {
