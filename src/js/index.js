@@ -64,7 +64,11 @@ async function init() {//初始化
 
 function play() {
   if (isLoading) {
-    alert('正在加载，请稍后！');
+    if (awardList.length === BALL_NUM) {
+      alert('正在加载，请稍后！');
+    } else {
+      alert('正在出球，请稍后！');
+    }
     return;
   }
   if (awardList.length === 0) {//奖池中没有小球
@@ -81,10 +85,12 @@ function play() {
 
 //小球掉落动画
 const showWinningBall = (ball) => {
+  isLoading = true;
   award.setAttribute('class', COLOR_DICT[ball.color].class)
   setTimeout(function () {//扭蛋成功提示
     award.setAttribute('class', '');
     message.innerText = COLOR_DICT[ball.color].text;
+    isLoading = false;
   }, 1100);
 }
 
