@@ -16,16 +16,15 @@ const message = document.getElementById('message');
 const startBtn = document.getElementById('start');
 let isLoading = true;
 
-startBtn.addEventListener('click', () => {
-  play()
-})
+startBtn.addEventListener('click', play);
 
 const loadImages = (urls) => {
   return Promise.all(urls.map(url => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const img = new Image();
       img.src = url;
       img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error(`图片${url}加载失败`));
     })
   }))
 }
@@ -35,24 +34,32 @@ const initImg = async () => {
   ballList.push(...await loadImages(ballUrls));
 }
 
-const start = () => {
+function initAwardList () {
   for (let i = 0; i < BALL_NUM; i++) {//随机生成各色小球
     const index = Math.floor(4 * Math.random());
     awardList[i] = new Ball(index, ballList[index], canvas, ctx);//新建小球对象
   }
-  window.clearInterval(timer);//清除计时器
-  timer = setInterval(function () {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);//清空画布
-    for (let i = 0; i < awardList.length; i++) {
-      awardList[i].run();
-    }//使小球运动
-  }, 15);
+}
+
+function startAnimation () {
+  clearInterval(timer);//清除计时器
+  timer = setInterval(drawFrame, 15);
+}
+
+function drawFrame () {
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // 清空画布
+  awardList.forEach(ball => ball.run()); // 使小球运动
 }
 
 async function init() {//初始化
-  await initImg()
-  isLoading = false;
-  start()
+  try {
+    await initImg()
+    isLoading = false;
+    initAwardList();
+    startAnimation();
+  } catch (e) {
+    console.error('初始化失败:', e);
+  }
 }
 
 function play() {
@@ -62,24 +69,23 @@ function play() {
   }
   if (awardList.length === 0) {//奖池中没有小球
     alert('重新开始！');
-    start();
+    initAwardList();
     message.innerText = '点击抽奖';
   } else {
-    window.clearInterval(timer);//清除计时器
+    clearInterval(timer);//清除计时器
     let r = awardList.pop();//将奖池中的小球减少
-    timer = setInterval(function () {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);//清空画布
-      for (let i = 0; i < awardList.length; i++) {
-        awardList[i].run();
-      }//使小球运动
-    }, 15);
-    //小球掉落动画
-    award.setAttribute('class', COLOR_DICT[r.color].class)
-    setTimeout(function () {//扭蛋成功提示
-      award.setAttribute('class', '');
-      message.innerText = COLOR_DICT[r.color].text;
-    }, 1100);
+    startAnimation();
+    showWinningBall(r);
   }
+}
+
+//小球掉落动画
+const showWinningBall = (ball) => {
+  award.setAttribute('class', COLOR_DICT[ball.color].class)
+  setTimeout(function () {//扭蛋成功提示
+    award.setAttribute('class', '');
+    message.innerText = COLOR_DICT[ball.color].text;
+  }, 1100);
 }
 
 init();
