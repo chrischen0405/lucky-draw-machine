@@ -1,23 +1,29 @@
+:root {
+  --bg-url: url(../img/bg.png);
+  --lotterybg-url: url(../img/lotterybg.png);
+  --start-btn-url: url(../img/start-btn.png);
+  --lighting-url: url(../img/lighting.png);
+  --ball-size: 60px;
+  --ball-animation-duration: 1s;
+}
+
 body {
   margin: 0;
   padding: 0;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .bg {
-  background: url(../img/bg.png) top no-repeat;
+  background: var(--bg-url) top no-repeat;
   background-size: 100%;
   overflow: hidden;
-  position: absolute;
+  position: relative;
   width: 400px;
   height: 100%;
-  margin-top: 0;
-  margin-left: 50%;
-  -webkit-transform: translate(-50%);
-  -moz-transform: translate(-50%);
-  -ms-transform: translate(-50%);
-  -o-transform: translate(-50%);
-  transform: translate(-50%);
 }
 
 #message {
@@ -25,28 +31,21 @@ body {
   text-align: center;
   height: 25px;
   font-size: 22px;
-  margin-top: 110px;
-  margin-left: 50%;
-  -webkit-transform: translate(-50%);
-  -moz-transform: translate(-50%);
-  -ms-transform: translate(-50%);
-  -o-transform: translate(-50%);
-  transform: translate(-50%);
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .lotterybg {
-  background: url(../img/lotterybg.png) top no-repeat;
+  background: var(--lotterybg-url) top no-repeat;
   background-size: 100%;
   overflow: visible;
   width: 80%;
   height: 100%;
   margin-top: 160px;
+  position: relative;
   margin-left: 50%;
-  -webkit-transform: translate(-50%);
-  -moz-transform: translate(-50%);
-  -ms-transform: translate(-50%);
-  -o-transform: translate(-50%);
-  transform: translate(-50%);
+  transform: translateX(-50%);
 }
 
 #myCanvas {
@@ -54,13 +53,9 @@ body {
   border: none;
   width: 285px;
   height: 170px;
-  margin-top: 15px;
-  margin-left: 50%;
-  -webkit-transform: translate(-50%);
-  -moz-transform: translate(-50%);
-  -ms-transform: translate(-50%);
-  -o-transform: translate(-50%);
-  transform: translate(-50%);
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .lighting {
@@ -74,13 +69,9 @@ body {
   position: absolute;
   z-index: 3;
   width: 202px;
-  margin-top: 413px;
-  margin-left: 50%;
-  -webkit-transform: translate(-50%);
-  -moz-transform: translate(-50%);
-  -ms-transform: translate(-50%);
-  -o-transform: translate(-50%);
-  transform: translate(-50%);
+  top: 413px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .award {
@@ -89,102 +80,54 @@ body {
   width: 60px;
   height: 200px;
   top: 470px;
-  margin-left: 50%;
-  -webkit-transform: translate(-50%);
-  -moz-transform: translate(-50%);
-  -ms-transform: translate(-50%);
-  -o-transform: translate(-50%);
-  transform: translate(-50%);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dropBall {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--ball-size);
+  height: var(--ball-size);
+  display: block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: drop var(--ball-animation-duration) ease-out forwards;
 }
 
 .dropBall1 {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 60px;
-  height: 60px;
-  display: block;
-  background: url(../img/1.png) no-repeat;
-  background-size: contain;
-  animation: drop 1s ease-out forwards;
-  -webkit-animation: drop 1s ease-out forwards;
+  background-image: url(../img/1.png);
 }
 
 .dropBall2 {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 60px;
-  height: 60px;
-  display: block;
-  background: url(../img/2.png) no-repeat;
-  background-size: contain;
-  animation: drop 1s ease-out forwards;
-  -webkit-animation: drop 1s ease-out forwards;
+  background-image: url(../img/2.png);
 }
 
 .dropBall3 {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 60px;
-  height: 60px;
-  display: block;
-  background: url(../img/3.png) no-repeat;
-  background-size: contain;
-  animation: drop 1s ease-out forwards;
-  -webkit-animation: drop 1s ease-out forwards;
+  background-image: url(../img/3.png);
 }
 
 .dropBall4 {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 60px;
-  height: 60px;
-  display: block;
-  background: url(../img/4.png) no-repeat;
-  background-size: contain;
-  animation: drop 1s ease-out forwards;
-  -webkit-animation: drop 1s ease-out forwards;
+  background-image: url(../img/4.png);
 }
 
 @keyframes drop {
   0% {
     transform: scale(0.7);
   }
-
   50% {
     transform: scale(1);
   }
-
   51% {
     transform: translateY(0px);
   }
-
   100% {
     transform: translateY(100px);
-  }
-}
-
-@-webkit-keyframes drop {
-  0% {
-    -webkit-transform: scale(0.7);
-  }
-
-  50% {
-    -webkit-transform: scale(1);
-  }
-
-  51% {
-    -webkit-transform: translateY(0px);
-  }
-
-  100% {
     -webkit-transform: translateY(100px);
-  }
+    -moz-transform: translateY(100px);
+    -ms-transform: translateY(100px);
+    -o-transform: translateY(100px);
+}
 }

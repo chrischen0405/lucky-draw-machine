@@ -86,7 +86,7 @@ function play() {
 //小球掉落动画
 const showWinningBall = (ball) => {
   isLoading = true;
-  award.setAttribute('class', COLOR_DICT[ball.color].class)
+  award.setAttribute('class', `dropBall ${COLOR_DICT[ball.color].class}`)
   setTimeout(function () {//扭蛋成功提示
     award.setAttribute('class', '');
     message.innerText = COLOR_DICT[ball.color].text;
